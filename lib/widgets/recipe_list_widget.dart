@@ -27,20 +27,24 @@ class RecipeListWidget extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
-              children:
-                  recipeController.filteredRecipes.asMap().entries.map((entry) {
-                // we need the index of recipe to navigate to proper inspect page
-                int index = entry.key;
-                Recipe recipe = entry.value;
+              children: [
+                // Spread the filtered recipe list with ...
+                  ...recipeController.filteredRecipes.asMap().entries.map((entry) {
+                    // we need the index of recipe to navigate to proper inspect page
+                    // filtered recipes are displayed, therefore the tapped filtered recipe must be found and index of that figured
+                    // Otherwise wrong recipe might open.
+                    int index = recipeController.recipes.indexOf(entry.value);
+                    Recipe recipe = entry.value;
 
-                return InkWell(
-                  onTap: () {
-                    Get.toNamed("/recipe/$index");
-                  },
-                  splashColor: Colors.black.withAlpha(30),
-                  child: RecipeText(recipe.name, recipe.favorite),
-                );
-              }).toList())
+                    return InkWell(
+                      onTap: () {
+                        Get.toNamed("/recipe/$index");
+                      },
+                      splashColor: Colors.black.withAlpha(30),
+                      child: RecipeText(recipe.name, recipe.favorite),
+                    );
+                  })
+                ])
           : const Text(
               "No recipes exists yet or no matching recipes with the given searchword."),
     );

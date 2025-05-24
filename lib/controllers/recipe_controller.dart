@@ -70,6 +70,4 @@ class RecipeController {
     recipes.refresh();
     filteredRecipes.refresh();
   }
-
-  get size => recipes.length;
 }

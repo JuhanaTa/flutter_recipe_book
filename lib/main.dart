@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: "/", page: () => HomeScreen()),
         GetPage(name: "/newRecipe", page: () => NewRecipeScreen()),
-        // Re-use the NewRecipeScreen and pass recipe nam
+        // Re-use the NewRecipeScreen and pass recipe index
         GetPage(name: "/editRecipe/:recipe", page: () => NewRecipeScreen()),
         GetPage(name: "/recipe/:recipe", page: () => RecipeInspectScreen())
       ],

@@ -96,7 +96,7 @@ class RecipeInspectWidget extends StatelessWidget {
             ? recipe.ingredients.asMap().entries.map((entry) {
                 Ingredient ingredient = entry.value;
                 return RecipeIngredientItem(ingredient);
-              }).toList()
+              })
             : [const Text("No ingredients saved for this recipe.")]),
       ]);
     });
