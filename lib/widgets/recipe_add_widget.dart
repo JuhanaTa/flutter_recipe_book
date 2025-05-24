@@ -33,7 +33,7 @@ class RecipeAddWidget extends StatelessWidget {
   // On both cases the recipe is formed, but edit just replaces the recipe from specific index.
   _submit(bool editFlag, Recipe? oldRecipe) {
     if (_formKey.currentState!.saveAndValidate()) {
-      // Ingredient fields however uses recipeFormController
+      // Ingredient fields fields from recipeFormController
       final fields = recipeFormController.fields;
 
       final List<Ingredient> ingredients = [];
@@ -77,7 +77,6 @@ class RecipeAddWidget extends StatelessWidget {
       recipeFormController.clear();
 
       // when recipe created, navigate back
-
       Get.back();
     }
   }
@@ -143,6 +142,9 @@ class RecipeAddWidget extends StatelessWidget {
                   ),
                 ]),
                 SizedBox(height: 16),
+
+                // Here dynamic ingredients fields that can be added or removed (uses recipe form controller)
+                // Implemented this own version based on this tutorial https://www.youtube.com/watch?v=MLo7euE9iqg
                 Obx(
                   () => Column(
                     children:

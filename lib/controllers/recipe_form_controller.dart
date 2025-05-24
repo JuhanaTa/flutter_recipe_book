@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/models/ingredient.dart';
 
+// Custom form controller to add and remove fields from recipe creation/addiotion widget
+// Implemented this own version based on this tutorial https://www.youtube.com/watch?v=MLo7euE9iqg
 class IngredientField {
   final TextEditingController itemController;
   final TextEditingController amountController;
@@ -37,7 +39,6 @@ class RecipeFormController extends GetxController {
   }
 
   void setEditableIngredientFields(List<Ingredient> ingredients){
-
     // Making sure that fields are empty, e.g. covers the case where recipes are inspected one after another.
     fields.clear();
 
@@ -57,7 +58,6 @@ class RecipeFormController extends GetxController {
       // Set the right amount as well
       field.amountController.text = singeIngredient.amount?.toString() ?? '';
     }
-
   }
 
 }

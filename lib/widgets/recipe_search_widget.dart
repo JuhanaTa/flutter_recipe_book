@@ -7,11 +7,13 @@ class RecipeSearchWidget extends StatelessWidget {
   final controller = Get.find<RecipeController>();
   static final searchKey = GlobalKey<FormBuilderState>();
 
-  // TODO: Implement recipe filter here.
   _search() {
     if (searchKey.currentState!.saveAndValidate()) {
       final searchWord = searchKey.currentState!.value['RecipeFilter'] as String?;
+
+      // Do nothing if searchWord is null
       if (searchWord != null) {
+        // Send searchWord to recipeController which filters the visible recipes
         controller.filterRecipes(searchKey.currentState!.value['RecipeFilter']);
       }
     }

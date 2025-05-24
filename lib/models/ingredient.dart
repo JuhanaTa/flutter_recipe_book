@@ -12,7 +12,7 @@ class Ingredient {
     this.amount,
   });
 
-  // Convert item, unit and type to JSON
+  // Convert ingredient with item, unit, amount and type to JSON
   Map<String, dynamic> toJson() => {
         'item': item,
         'unit': unit,
@@ -20,7 +20,7 @@ class Ingredient {
         'amount': amount,
       };
 
-  // Create Ingredient from the ingredien JSON
+  // Create Ingredient from the ingredient JSON
   factory Ingredient.fromJson(Map<String, dynamic> json) {
     return Ingredient(
       item: json['item'] as String?,

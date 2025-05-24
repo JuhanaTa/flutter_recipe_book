@@ -9,7 +9,7 @@ List<Widget> mainComponents() {
     // Show search box
     RecipeSearchWidget(),
 
-    // Show listing of categories
+    // Show listing of recipes
     Expanded(
       child: RecipeListWidget(),
     )
