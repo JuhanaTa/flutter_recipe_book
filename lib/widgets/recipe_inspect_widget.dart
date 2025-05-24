@@ -44,61 +44,64 @@ class RecipeInspectWidget extends StatelessWidget {
         return const Text("Recipe not found");
       }
 
-      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(recipe.name, style: TextStyle(fontSize: 20)),
-              ElevatedButton.icon(
-                onPressed: () => _deleteRecipe(recipe),
-                label: Text("Delete"),
-                icon: const Icon(Icons.delete),
-              ),
-            ]),
-        const SizedBox(height: 16),
-        Text("Set as favorite:"),
-        const SizedBox(height: 4),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: recipe.favorite
-                ? [
-                    const Text(
-                      "Currently one of your favorites.",
-                      style: TextStyle(color: Colors.green),
-                    ),
-                    ElevatedButton.icon(
-                      onPressed: () => _setFavourite(recipe, false),
-                      label: Text("Dislike"),
-                      icon: const Icon(Icons.heart_broken),
-                    ),
-                  ]
-                : [
-                    const Text(
-                      "Currently not one of your favorites.",
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    ElevatedButton.icon(
-                      onPressed: () => _setFavourite(recipe, true),
-                      label: Text("Like"),
-                      icon: const Icon(Icons.favorite_outline),
-                    ),
-                  ]),
-        const SizedBox(height: 8),
-        Text("How to cook:"),
-        const SizedBox(height: 8),
-        DescriptionItem(recipe),
-        const SizedBox(height: 8),
-        Text("Ingredients:"),
-        const SizedBox(height: 8),
-        ...(recipe.ingredients.isNotEmpty
-            ? recipe.ingredients.asMap().entries.map((entry) {
-                Ingredient ingredient = entry.value;
-                return RecipeIngredientItem(ingredient);
-              })
-            : [const Text("No ingredients saved for this recipe.")]),
-      ]);
+      return Padding(
+          padding: EdgeInsets.all(10),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(recipe.name, style: TextStyle(fontSize: 20)),
+                  ElevatedButton.icon(
+                    onPressed: () => _deleteRecipe(recipe),
+                    label: Text("Delete"),
+                    icon: const Icon(Icons.delete),
+                  ),
+                ]),
+            const SizedBox(height: 16),
+            Text("Set as favorite:"),
+            const SizedBox(height: 4),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: recipe.favorite
+                    ? [
+                        const Text(
+                          "Currently one of your favorites.",
+                          style: TextStyle(color: Colors.green),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () => _setFavourite(recipe, false),
+                          label: Text("Dislike"),
+                          icon: const Icon(Icons.heart_broken),
+                        ),
+                      ]
+                    : [
+                        const Text(
+                          "Currently not one of your favorites.",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () => _setFavourite(recipe, true),
+                          label: Text("Like"),
+                          icon: const Icon(Icons.favorite_outline),
+                        ),
+                      ]),
+            const SizedBox(height: 8),
+            Text("How to cook:"),
+            const SizedBox(height: 8),
+            DescriptionItem(recipe),
+            const SizedBox(height: 8),
+            Text("Ingredients:"),
+            const SizedBox(height: 8),
+            ...(recipe.ingredients.isNotEmpty
+                ? recipe.ingredients.asMap().entries.map((entry) {
+                    Ingredient ingredient = entry.value;
+                    return RecipeIngredientItem(ingredient);
+                  })
+                : [const Text("No ingredients saved for this recipe.")]),
+          ]));
     });
   }
 }

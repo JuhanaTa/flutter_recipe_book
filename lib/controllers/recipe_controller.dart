@@ -60,6 +60,8 @@ class RecipeController {
   }
 
   void filterRecipes(String searchWord) {
+    // Find matching recipes with searchword and assign them into filteredRecipes
+    // searchword and recipe name handled with lowercase to eliminate differencies with lower/higher cases
     filteredRecipes.value = recipes.where((recipe) {
       return recipe.name.toLowerCase().contains(searchWord.toLowerCase());
     }).toList();

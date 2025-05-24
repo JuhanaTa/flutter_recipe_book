@@ -8,6 +8,7 @@ class Recipe {
 
   Recipe({required this.name, required this.description, required this.ingredients, required this.favorite});
 
+  // From Recipe to JSON
   Map<String, dynamic> toJson() => {
         'name': name,
         'description': description, 
@@ -15,6 +16,7 @@ class Recipe {
         'ingredients': ingredients.map((ing) => ing.toJson()).toList(),
       };
 
+  // From JSON to Recipe
   factory Recipe.fromJson(Map<String, dynamic> json) {
     var ingredientsJSON = json['ingredients'] as List<dynamic>?;
 

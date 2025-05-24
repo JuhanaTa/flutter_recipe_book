@@ -154,7 +154,7 @@ class RecipeAddWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                flex: 2,
+                                flex: 3,
                                 child: FormBuilderTextField(
                                   name: 'ingredient$i',
                                   controller: field.itemController,
@@ -166,9 +166,9 @@ class RecipeAddWidget extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 16),
+                              SizedBox(width: 8),
                               Expanded(
-                                flex: 1,
+                                flex: 2,
                                 child: FormBuilderTextField(
                                   name: 'amount$i',
                                   controller: field.amountController,
@@ -190,9 +190,9 @@ class RecipeAddWidget extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 16),
+                              SizedBox(width: 8),
                               Expanded(
-                                flex: 1,
+                                flex: 2,
                                 child: DropdownButtonFormField<String>(
                                   value: field.defUnit.value,
                                   autovalidateMode: AutovalidateMode.always,

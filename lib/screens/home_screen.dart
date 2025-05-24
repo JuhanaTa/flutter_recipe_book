@@ -19,11 +19,13 @@ List<Widget> mainComponents() {
 }
 
 class Breakpoints {
-  static const sm = 640;
+  static const sm = 550;
   static const md = 768;
 }
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
