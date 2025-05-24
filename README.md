@@ -13,13 +13,13 @@ The app consists of three main pages:
 
 # How to try?
 
-You can try the app here:
+You can try the app here: https://juhanata.github.io/flutter_recipe_book/build/web/
 
 # How to use locally?
 
 If you want to locally try the game, clone the source files in your desired location.
 
-Source code is located here: 
+Source code is located here: https://github.com/JuhanaTa/flutter_recipe_book
 
 Setup your Flutter development environment by following the guidelines shown here:
 https://docs.flutter.dev/get-started/install
