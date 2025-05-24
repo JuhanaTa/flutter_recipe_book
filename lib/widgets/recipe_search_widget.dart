@@ -40,7 +40,7 @@ class RecipeSearchWidget extends StatelessWidget {
               ),
             ),
           ),
-          Padding(padding: EdgeInsets.all(8)),
+          const SizedBox(height: 16),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             ElevatedButton.icon(
               onPressed: _search,
@@ -53,7 +53,11 @@ class RecipeSearchWidget extends StatelessWidget {
               label: Text("Clear"),
               icon: const Icon(Icons.clear),
             ),
-          ])
+          ]),
+          const SizedBox(height: 16),
+          Obx(()=>
+            Text("Showing ${controller.filteredRecipes.length} / ${controller.recipes.length} Recipes")
+          )
         ],
       ),
     );
