@@ -2,35 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/controllers/recipe_controller.dart';
 import 'package:recipe_book/models/recipe.dart';
-import 'package:recipe_book/widgets/recipe_add_widget.dart';
 import 'package:recipe_book/widgets/recipe_inspect_widget.dart';
 
-List<Widget> mainComponents(Recipe? recipe) {
-  final List<Widget> list = [
-    // Show search box
-    Expanded(
-      child: RecipeInspectWidget(recipe),
-    ),
+List<Widget> mainComponents() {
+  final recipeParam = Get.parameters['recipe'];
 
-    // Show listing of categories
-    /*Expanded(
-      child: RecipeListWidget(),
-    )*/
-  ];
+  // Return null if no recipes in parameters
+  if (recipeParam != null) {
+    final recipeIndex = int.parse(recipeParam);
 
-  return list;
+    final List<Widget> list = [
+      // Show search box
+      Expanded(
+        child: RecipeInspectWidget(recipeIndex),
+      ),
+    ];
+
+    return list;
+  } else {
+    final List<Widget> list = [
+      // Show search box
+      Expanded(
+        child: const Text("No recipe found"),
+      ),
+    ];
+    return list;
+  }
 }
 
 class RecipeInspectScreen extends StatelessWidget {
   final Recipe? recipe;
 
-  RecipeInspectScreen({Key? key}) : recipe = _getRecipeFromParameters(Get.parameters, Get.find<RecipeController>()), super(key: key);
+  RecipeInspectScreen({super.key})
+      : recipe = _getRecipeFromParameters(
+            Get.parameters, Get.find<RecipeController>());
 
-  static Recipe? _getRecipeFromParameters(Map<String, String?> parameters, RecipeController controller) {
+  static Recipe? _getRecipeFromParameters(
+      Map<String, String?> parameters, RecipeController controller) {
     String? indexString = parameters['recipe'];
-
-    print("parameters");
-    print(parameters);
 
     if (indexString != null) {
       try {
@@ -55,29 +64,24 @@ class RecipeInspectScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(recipe != null ? recipe!.name : ""),
+        title: Text("Recipe Screen"),
         leading: BackButton(
           onPressed: () => Get.back(),
         ),
       ),
       body: Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 1000),
+          constraints: BoxConstraints(maxWidth: 600),
           child: Column(
-            children: mainComponents(recipe),
+            children: mainComponents(),
           ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //print("Should navigate to edit recipe");
-          //print(recipe!.ingredients);
-
-          // Navigate to edit recipe screen by taking the index parameter of recip
-          //Get.toNamed("/editRecipe/");
-
-          String? recIndex = Get.parameters['recipe']; 
+          //Based on route parameters figure out which recipe page to navigate to.
+          String? recIndex = Get.parameters['recipe'];
           Get.toNamed("/editRecipe/$recIndex");
         },
         child: Icon(Icons.edit),

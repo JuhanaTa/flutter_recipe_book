@@ -35,11 +35,10 @@ class RecipeListWidget extends StatelessWidget {
 
                 return InkWell(
                   onTap: () {
-                    print('Tapped on recipe: ${recipe.name}');
                     Get.toNamed("/recipe/$index");
                   },
                   splashColor: Colors.black.withAlpha(30),
-                  child: RecipeText(recipe.name),
+                  child: RecipeText(recipe.name, recipe.favorite),
                 );
               }).toList())
           : const Text(
@@ -50,16 +49,26 @@ class RecipeListWidget extends StatelessWidget {
 
 class RecipeText extends StatelessWidget {
   final String text;
-  const RecipeText(this.text, {super.key});
+  final bool favorite;
+  const RecipeText(this.text, this.favorite, {super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.red.withAlpha(90),
+          color: Colors.green.withAlpha(90),
           borderRadius: BorderRadius.circular(10)),
       child: Center(
-        child: Text(text),
-      ),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(size: 64, Icons.restaurant),
+          Row(
+            children: [],
+          ),
+          Text(text),
+          if (favorite) Icon(size: 32, Icons.star, color: Colors.yellow),
+        ],
+      )),
     );
   }
 }

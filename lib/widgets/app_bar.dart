@@ -7,17 +7,6 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text('Recipe Book'),
-      actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.menu_book),
-          tooltip: 'Show Snackbar',
-          onPressed: () {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(const SnackBar(content: Text('This is some random snackbar')));
-          },
-        ),
-      ],
     );
   }
   

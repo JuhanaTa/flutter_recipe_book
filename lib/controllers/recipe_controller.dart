@@ -8,7 +8,9 @@ class RecipeController {
   RxList recipes;
   RxList filteredRecipes;
 
-  RecipeController() : recipes = [].obs, filteredRecipes = [].obs {
+  RecipeController()
+      : recipes = [].obs,
+        filteredRecipes = [].obs {
     final storedRecipes = storage.get('recipes');
 
     if (storedRecipes == null) {
@@ -30,7 +32,6 @@ class RecipeController {
     );
   }
 
-  // Recipe? because on some cases the recipe index could be invalid.
   Recipe? getOneRecipe(int index) {
     // check that recipe with that specific index actually exist.
     if (index >= 0 && index < recipes.length) {
@@ -42,29 +43,32 @@ class RecipeController {
 
   void add(Recipe recipe) {
     recipes.add(recipe);
+    clearSearch();
     _save();
   }
 
-  void edit(Recipe recipe, int index){
+  void edit(Recipe recipe, int index) {
     recipes[index] = recipe;
+    clearSearch();
     _save();
   }
 
   void delete(Recipe recipe) {
     recipes.remove(recipe);
-    recipes.refresh();
+    clearSearch();
     _save();
   }
 
-  void filterRecipes(String searchWord){
+  void filterRecipes(String searchWord) {
     filteredRecipes.value = recipes.where((recipe) {
       return recipe.name.toLowerCase().contains(searchWord.toLowerCase());
     }).toList();
-    print(filteredRecipes.length);
   }
 
   void clearSearch() {
     filteredRecipes.value = recipes;
+    recipes.refresh();
+    filteredRecipes.refresh();
   }
 
   get size => recipes.length;

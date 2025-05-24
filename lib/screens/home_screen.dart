@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
       appBar: MyTopBar(),
       body: Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 1000),
+          constraints: BoxConstraints(maxWidth: 800),
           child: Column(
             children: mainComponents(),
           ),

@@ -3,13 +3,15 @@ import 'package:recipe_book/models/ingredient.dart';
 class Recipe {
   final String name;
   final String description;
+  final bool favorite;
   final List<Ingredient> ingredients;
 
-  Recipe({required this.name, required this.description, required this.ingredients});
+  Recipe({required this.name, required this.description, required this.ingredients, required this.favorite});
 
   Map<String, dynamic> toJson() => {
         'name': name,
         'description': description, 
+        'favorite': favorite,
         'ingredients': ingredients.map((ing) => ing.toJson()).toList(),
       };
 
@@ -25,6 +27,7 @@ class Recipe {
     return Recipe(
       name: json['name'], 
       description: json['description'], 
+      favorite: json['favorite'], 
       ingredients: parsedIngredients
     );
   }
