@@ -6,10 +6,11 @@ class RecipeController {
   final storage = Hive.box("storage");
 
   RxList recipes;
+  RxList filteredRecipes;
 
-  RecipeController() : recipes = [].obs {
+  RecipeController() : recipes = [].obs, filteredRecipes = [].obs {
     final storedRecipes = storage.get('recipes');
-    print(storedRecipes);
+
     if (storedRecipes == null) {
       storage.put('recipes', []);
     } else {
@@ -18,11 +19,8 @@ class RecipeController {
           .map((json) => Recipe.fromJson(Map<String, dynamic>.from(json)))
           .toList();
       recipes.assignAll(loadedRecipes);
+      filteredRecipes.assignAll(loadedRecipes);
     }
-
-    print('data');
-    print(recipes);
-
   }
 
   void _save() {
@@ -47,10 +45,26 @@ class RecipeController {
     _save();
   }
 
+  void edit(Recipe recipe, int index){
+    recipes[index] = recipe;
+    _save();
+  }
+
   void delete(Recipe recipe) {
     recipes.remove(recipe);
     recipes.refresh();
     _save();
+  }
+
+  void filterRecipes(String searchWord){
+    filteredRecipes.value = recipes.where((recipe) {
+      return recipe.name.toLowerCase().contains(searchWord.toLowerCase());
+    }).toList();
+    print(filteredRecipes.length);
+  }
+
+  void clearSearch() {
+    filteredRecipes.value = recipes;
   }
 
   get size => recipes.length;

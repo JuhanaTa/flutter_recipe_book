@@ -20,8 +20,14 @@ class CustomScrollBehavior extends MaterialScrollBehavior {
 Future<void> main() async {
   await Hive.initFlutter();
   await Hive.openBox("storage");
-  Get.lazyPut<RecipeController>(() => RecipeController());
-  Get.lazyPut<RecipeFormController>(() => RecipeFormController());
+
+  // had issues with controllers while using lazyPut
+  // Get.put could be used here but lazyPut has also fenix parameter which allows the controller be 
+  // recreated automatically when needed multiple times, e.g. when navigating multiple times from page to page.
+  // https://stackoverflow.com/questions/71734768/diff-between-get-put-and-get-lazyput
+  Get.lazyPut<RecipeController>(() => RecipeController(), fenix: true);
+  Get.lazyPut<RecipeFormController>(() => RecipeFormController(), fenix: true);
+
   runApp(MyApp());
 }
 

@@ -9,19 +9,15 @@ import 'package:recipe_book/models/ingredient.dart';
 import 'package:recipe_book/models/recipe.dart';
 
 class RecipeAddWidget extends StatelessWidget {
-  final RecipeController controller = Get.find();
-  final RecipeFormController recipeFormController = Get.find();
+  RecipeAddWidget({super.key, this.recipe});
 
   final Recipe? recipe;
+  bool recipeEdit = false;
 
-  RecipeAddWidget({Key? key})
-      : recipe = _getRecipeForEdit(),
-        super(key: key);
-
-  static Recipe? _getRecipeForEdit() {
+  Recipe? _getRecipeForEdit(RecipeController recipe) {
     final recipeParam = Get.parameters['recipe'];
     
-    // Return null if no recipes found
+    // Return null if no recipes in parameters
     if(recipeParam == null) {
       return null;
     }
@@ -32,10 +28,11 @@ class RecipeAddWidget extends StatelessWidget {
     return controller.getOneRecipe(recipeIndex);
   }
 
-
   static final _formKey = GlobalKey<FormBuilderState>();
 
-  _submit() {
+  // New recipe can be submitted or based on the editFlag existing recipe can be edited.
+  // On both cases the recipe is formed, but edit just replaces the recipe from specific index.
+  _submit(RecipeController controller, RecipeFormController recipeFormController, bool editFlag) {
     print('submit');
     if (_formKey.currentState!.saveAndValidate()) {
 
@@ -69,18 +66,45 @@ class RecipeAddWidget extends StatelessWidget {
         description: _formKey.currentState!.value['RecipeDescription'],
         ingredients: ingredients,
       );
-      controller.add(recipe);
+
+
+      if(editFlag){
+        final recipeParam = Get.parameters['recipe'];
+        if(recipeParam != null) {
+          // Get index of editable recipe
+          final recipeIndex = int.parse(recipeParam);
+          // Save the new edited recipe
+          controller.edit(recipe, recipeIndex);
+        }
+      } else {
+        controller.add(recipe);
+      } 
+
 
       _formKey.currentState?.reset();
       recipeFormController.clear();
+
+      // when recipe created, navigate back
+      Get.offAllNamed('/');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final RecipeController controller = Get.find();
+    final RecipeFormController recipeFormController = Get.find();
+
+    // Fetch the recipe if user is editing the recipe
+    final Recipe? recipe = _getRecipeForEdit(controller);
+
+    // Set recipe edit flag to figure out how to save the recipe
+    // used on _submit method to either save new recipe or edit existing one.
+    if(recipe != null){
+      recipeEdit = true;
+    }
 
     if(recipe != null){
-      recipeFormController.setEditableIngredientFields(recipe!.ingredients);
+      recipeFormController.setEditableIngredientFields(recipe.ingredients);
     }
 
     return Scaffold(
@@ -223,7 +247,7 @@ class RecipeAddWidget extends StatelessWidget {
                 ),
 
                 ElevatedButton(
-                  onPressed: () => _submit(),
+                  onPressed: () => _submit(controller, recipeFormController, recipeEdit),
                   child: Text("Save"),
                 ),
               ],

@@ -21,26 +21,29 @@ class RecipeListWidget extends StatelessWidget {
     count = count < 1 ? 1 : count;
 
     return Obx(
-      () => GridView.count(
-        crossAxisCount: count,
-        padding: const EdgeInsets.all(10),
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        children: recipeController.recipes.asMap().entries.map((entry) {
-          // we need the index of recipe to navigate to proper inspect page
-          int index = entry.key;
-          Recipe recipe = entry.value;
+      () => recipeController.filteredRecipes.isNotEmpty
+          ? GridView.count(
+              crossAxisCount: count,
+              padding: const EdgeInsets.all(10),
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              children:
+                  recipeController.filteredRecipes.asMap().entries.map((entry) {
+                // we need the index of recipe to navigate to proper inspect page
+                int index = entry.key;
+                Recipe recipe = entry.value;
 
-          return InkWell(
-            onTap: () {
-              print('Tapped on recipe: ${recipe.name}');
-              Get.toNamed("/recipe/$index");
-            },
-            splashColor: Colors.black.withAlpha(30),
-            child: RecipeText(recipe.name),
-          );
-        }).toList(),
-      ),
+                return InkWell(
+                  onTap: () {
+                    print('Tapped on recipe: ${recipe.name}');
+                    Get.toNamed("/recipe/$index");
+                  },
+                  splashColor: Colors.black.withAlpha(30),
+                  child: RecipeText(recipe.name),
+                );
+              }).toList())
+          : const Text(
+              "No recipes exists yet or no matching recipes with the given searchword."),
     );
   }
 }

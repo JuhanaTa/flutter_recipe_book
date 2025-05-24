@@ -43,7 +43,7 @@ class RecipeFormController extends GetxController {
 
     for (final singeIngredient in ingredients){
       //This creates the ingredient field
-      addField(singeIngredient.type ?? "Liquid"); //Liquid might not be right but using it as default intead of empty.
+      addField(singeIngredient.type ?? "Liquid"); //Liquid might not be right if null but falling back to it instead of empty.
       
       //The new field is accesed here to assign other Ingredient field parameters
       final field = fields.last;
